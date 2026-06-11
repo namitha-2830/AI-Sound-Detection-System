@@ -1,0 +1,10 @@
+tensorflow
+tensorflow-hub
+numpy
+librosa
+sounddevice
+wavio
+requests
+gspread
+google-auth
+scipy

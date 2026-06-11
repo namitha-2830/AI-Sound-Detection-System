@@ -1,0 +1,23 @@
+import librosa
+import numpy as np
+from tensorflow.keras.models import load_model
+
+# load trained model
+model = load_model("saved_model/my_model.h5")
+
+# audio file to test
+audio_file = "data/alarm/alarm1.wav"
+
+audio, sr = librosa.load(audio_file, sr=None)
+
+mfcc = librosa.feature.mfcc(y=audio, sr=sr, n_mfcc=13)
+mfcc_mean = np.mean(mfcc.T, axis=0)
+
+mfcc_mean = mfcc_mean.reshape(1, -1)
+
+prediction = model.predict(mfcc_mean)
+
+classes = ["clap", "doorbell", "alarm"]
+
+print("Prediction probabilities:", prediction)
+print("Predicted sound:", classes[np.argmax(prediction)])
